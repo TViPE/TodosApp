@@ -32,7 +32,7 @@ var TodoList = Backbone.Collection.extend({
 
 	// Todos are sorted by their original insertion order
 	comparator: function(todo){
-		return togo.get('order');
+		return todo.get('order');
 	}
 });
 
