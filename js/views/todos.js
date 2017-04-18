@@ -10,7 +10,7 @@ app.TodoView = Backbone.View.extend({
 
 	// The DOM events specific to an item
 	events: {
-		'dbclick label': 'edit',
+		'dblclick label': 'edit',
 		'keypress .edit': 'updateOnEnter',
 		'blur .edit': 'close'
 	},
