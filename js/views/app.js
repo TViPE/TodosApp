@@ -46,7 +46,7 @@ app.AppView = Backbone.View.extend({
 	// Re-render the App just means refreshing the statistic -- the rest
 	// of the app doesn't change.
 	render: function(){
-		var complted = app.Todos.completed().length;
+		var completed = app.Todos.completed().length;
 		var remaining = app.Todos.remaining().length;
 
 		if(app.Todos.length){
