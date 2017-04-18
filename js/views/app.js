@@ -15,11 +15,16 @@ app.AppView = Backbone.View.extend({
 	// At initilization we bind to the relent events on the Todos
 	// collection, when items are added or changed
 	initialize: function(){
+
+		// Using jQuery to cache the elements that will be using into
+		// local properties. 
+		// this.$() == this.$el
 		this.allCheckbox = this.$('#toggle-all')[0];
 		this.$input = this.$('#new-todo');
 		this.$footer = this.$('#footer');
 		this.$main = this.$('#main');
 
+		//Binding two events on the Todos collection: add and reset
 		this.listenTo(app.Todos, 'add', this.addOne);
 		this.listenTo(app.Todos, 'reset', this.addAll);
 	},
