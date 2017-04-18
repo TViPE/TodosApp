@@ -103,7 +103,7 @@ app.AppView = Backbone.View.extend({
 	// If you hit return in the main input fiel, create new Todo model
 	// Persiting it to localStorage
 	createOnEnter: function(event) {
-		if(event.which !== ENTER_KEY || this.$input.val().trim()) {
+		if(event.which !== ENTER_KEY || !this.$input.val().trim()) {
 			return;
 		}
 
