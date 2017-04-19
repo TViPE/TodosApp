@@ -10,7 +10,9 @@ app.TodoView = Backbone.View.extend({
 
 	// The DOM events specific to an item
 	events: {
+		'click .toggle': 'toggleCompleted',
 		'dblclick label': 'edit',
+		'click .destroy': 'clear',
 		'keypress .edit': 'updateOnEnter',
 		'blur .edit': 'close'
 	},
@@ -21,16 +23,41 @@ app.TodoView = Backbone.View.extend({
 
 	initialize: function(){
 		this.listenTo(this.model, 'change', this.render);
+		this.listenTo(this.model, 'destroy', this.remove);
+		this.listenTo(this.model, 'visible', this.toggleVisible);
 	},
 
 	// RE-renders the titles of the todo item
 	render: function(){
 		this.$el.html(this.template(this.model.attributes));
+
+		this.$el.toggleClass('completed', this.model.get('completed'));
+		this.toggleVisible();
+
 		this.$input = this.$('.edit');
 		return this;
 	},
 
-	//Switchi this view into editing mode, displaying the input field
+	// Toggle visibility of item
+	toggleVisible: function(){
+		this.$el.toggleClass('hidden', this.isHidden());
+	},
+
+	// Determines if item should be hidden
+	isHidden: function(){
+		var isCompleted = this.model.get('completed');
+		return(
+			(!isCompleted && app.TodoFilter === 'completed') 
+			|| (isCompleted && app.TodoFilter === 'active')
+		);
+	},
+
+	// Toggle the "completed" state of the model
+	toggleCompleted: function(){
+		this.model.toggle();
+	},
+
+	// Switching this view into editing mode, displaying the input field
 	edit: function(){
 		this.$el.addClass('editing');
 		this.$input.focus();
@@ -49,6 +76,10 @@ app.TodoView = Backbone.View.extend({
 		if(e.which === ENTER_KEY) {
 			this.close();
 		}
+	},
+
+	clear: function() {
+		this.model.destroy();
 	}
 
 });
